@@ -27,7 +27,7 @@ export default {
     },
     methods: {
       getLibrary(search) {
-            Promise.all([axios.get("https://api.themoviedb.org/3/search/movie?api_key=b91b4dc2e6d19b04fe76e513e83a3219&query=" + search), axios.get("https://api.themoviedb.org/3/search/tv?api_key=e99307154c6dfb0b4750f6603256716d&language=it-IT&query=" + search)])
+            Promise.all([axios.get("https://api.themoviedb.org/3/search/movie?api_key=b91b4dc2e6d19b04fe76e513e83a3219&language=it-IT&query=" + search), axios.get("https://api.themoviedb.org/3/search/tv?api_key=e99307154c6dfb0b4750f6603256716d&language=it-IT&query=" + search)])
                 .then((res) => {
                   const films = res[0].data.results
                   const series = res[1].data.results
