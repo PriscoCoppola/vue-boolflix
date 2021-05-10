@@ -10,7 +10,7 @@
             <li v-else>Titolo: {{ film.title }}</li>
             <li v-if="film.original_title === undefined">Titolo: {{ film.original_name }}</li>
             <li v-else>Titolo: {{ film.original_title }}</li>
-            <li v-if="film.original_language === 'it'">Lingua: <img class=".language" src="@/assets/images/it.png" alt="it" /></li>
+            <li v-if="film.original_language === 'it'">Lingua: <img class="language" src="@/assets/images/it.png" alt="it" /></li>
             <li v-else-if="film.original_language === 'en'">Lingua: <img class="language" src="@/assets/images/en.png" alt="en" /></li>
             <li v-else>Lingua: {{ film.original_language }}</li>
             <li>Voto: 
