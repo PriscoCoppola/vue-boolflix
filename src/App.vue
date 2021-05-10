@@ -34,7 +34,6 @@ export default {
 
                   let library = [...films, ...series]
                   this.films = library
-                  console.log(this.films)
                   })
                 .catch((err) => {
                     console.log("Error", err);
@@ -44,4 +43,6 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+@import url(https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css);
+</style>

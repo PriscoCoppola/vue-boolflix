@@ -13,7 +13,16 @@
             <li v-if="film.original_language === 'it'">Lingua: <img class=".language" src="@/assets/images/it.png" alt="it" /></li>
             <li v-else-if="film.original_language === 'en'">Lingua: <img class="language" src="@/assets/images/en.png" alt="en" /></li>
             <li v-else>Lingua: {{ film.original_language }}</li>
-            <li>Voto: {{ film.vote_average }}</li>
+            <li>Voto: 
+                <span 
+                    v-for="(fullStar, x) in Math.round(film.vote_average / 2)" 
+                    :key="x"
+                ><i class="fas fa-star"></i></span>
+                <span 
+                    v-for="(emptyStar, i) in 5 - Math.round(film.vote_average / 2)" 
+                    :key="i"
+                ><i class="far fa-star"></i></span>
+            </li>
         </ul>
     </div>
 </template>
@@ -23,14 +32,6 @@
 export default {
     name: "Content",
     props: ['filmsList'],
-    data() {
-        return {
-            
-        };
-    },
-    methods: {
-        
-    },
 };
 </script>
 
