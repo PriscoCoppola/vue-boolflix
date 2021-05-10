@@ -1,28 +1,47 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div id="app">
+        <Header @performSearch="getLibrary"/>
+
+        <main>
+            <Content :filmsList="films" />
+        </main>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from "axios";
+
+import Header from "@/components/Header.vue";
+import Content from "@/components/Content.vue";
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+    name: "App",
+    components: {
+        Header,
+        Content,
+    },
+    data() {
+      return {
+        films: [],
+      }
+    },
+    methods: {
+      getLibrary(search) {
+            Promise.all([axios.get("https://api.themoviedb.org/3/search/movie?api_key=b91b4dc2e6d19b04fe76e513e83a3219&query=" + search), axios.get("https://api.themoviedb.org/3/search/tv?api_key=e99307154c6dfb0b4750f6603256716d&language=it-IT&query=" + search)])
+                .then((res) => {
+                  const films = res[0].data.results
+                  const series = res[1].data.results
+
+                  let library = [...films, ...series]
+                  this.films = library
+                  console.log(this.films)
+                  })
+                .catch((err) => {
+                    console.log("Error", err);
+                });
+        },
+    }
+};
 </script>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style lang="scss"></style>
