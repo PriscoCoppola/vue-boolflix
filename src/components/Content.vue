@@ -1,102 +1,75 @@
 <template>
-    <div class="cards">
-        <ul 
-            v-for="film in filmsList"
-            :key="film.id"
-        
+    <main>
+        <div
+            class="searchList"
+            v-if="filmsList.length !== 0 || seriesList.length !== 0"
         >
-            <li>
-                <div class="images">
-                    <div v-if="film.backdrop_path === null"><img class="backdrop" src="@/assets/images/no-poster.png" alt=""></div>
-                    <div v-else><img class="backdrop" :src="`https://image.tmdb.org/t/p/w342${film.poster_path}`" alt=""></div>
-                    <div class="onhover">
-                        <div v-if="film.title === undefined">Titolo: {{ film.name }}</div>
-                        <div v-else>Titolo: {{ film.title }}</div>
-                        <div v-if="film.original_title === undefined">Titolo: {{ film.original_name }}</div>
-                        <div v-else>Titolo: {{ film.original_title }}</div>
-                        <div v-if="film.original_language === 'it'">Lingua: <img class="language" src="@/assets/images/it.png" alt="it" /></div>
-                        <div v-else-if="film.original_language === 'en'">Lingua: <img class="language" src="@/assets/images/en.png" alt="en" /></div>
-                        <div v-else>Lingua: {{ film.original_language }}</div>
-                        <div>Voto:
-                            <span
-                                v-for="(fullStar, x) in Math.round(film.vote_average / 2)"
-                                :key="x + 1000"
-                            ><i class="fas fa-star"></i></span>
-                            <span
-                                v-for="(emptyStar, i) in 5 - Math.round(film.vote_average / 2)"
-                                :key="i"
-                            ><i class="far fa-star"></i></span>
-                        </div>
-                        <div>Info: {{ film.overview }}</div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
+            <h1>Series</h1>
+            <div class="cards">
+                <Library
+                    v-for="film in filmsList"
+                    :key="film.id"
+                    :info="film"
+                />
+            </div>
+            <h1>Movies</h1>
+            <div class="cards">
+                <Library
+                    v-for="series in seriesList"
+                    :key="series.id"
+                    :info="series"
+                />
+            </div>
+        </div>
+        <div class="homepage" v-else>
+            <h1>Popular</h1>
+            <div class="cards">
+                <Library
+                    v-for="popular in popularList"
+                    :key="popular.id"
+                    :info="popular"
+                />
+            </div>
+            <h1>Top Rated</h1>
+            <div class="cards">
+                <Library
+                    v-for="topRated in topRatedList"
+                    :key="topRated.id"
+                    :info="topRated"
+                />
+            </div>
+        </div>
+    </main>
 </template>
 
 <script>
+import Library from "@/components/Library.vue";
 
 export default {
     name: "Content",
-    props: ['filmsList'],
+    components: {
+        Library,
+    },
+    props: {
+        filmsList: Array,
+        seriesList: Array,
+        popularList: Array,
+        topRatedList: Array,
+    },
 };
 </script>
 
 <style lang="scss" scoped>
-.cards {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 40px;
+main {
+    padding: 50px 0;
 
-    ul {
-        list-style: none;
-        margin: 20px 10px;
-        
-        .images {
-            position: relative;
-            height: 500px;
-
-            &:hover .onhover {
-                display: flex;
-            }
-
-            .backdrop {
-                width: 342px;
-                height: 500px;
-            }
-            
-            .onhover {
-                display: none;
-                flex-direction: column;
-                justify-content: center;
-                position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                padding: 20px; 
-                background-color: rgba(0, 0, 0, .8);
-                color: #fff;
-                overflow: auto;
-
-                div {
-                    padding-bottom: 10px;
-
-                    i {
-                        color: yellow;
-                    }
-                }
-
-                .language {
-                    width: 20px;
-                    height: 10px;
-                }
-            }
-        }  
+    h1 {
+        color: #fff;
+        padding: 10px;
+    }
+    .cards {
+        display: flex;
+        overflow-x: auto;
     }
 }
-
-
-
 </style>

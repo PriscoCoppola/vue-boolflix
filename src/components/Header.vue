@@ -5,7 +5,7 @@
             <input
                 type="text"
                 placeholder="Film, Serie TV"
-                v-model="search"
+                v-model.trim="search"
             />
             <button @click="$emit('performSearch', search)"><i class="fas fa-search"></i></button>
         </div>
