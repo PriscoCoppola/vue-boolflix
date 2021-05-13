@@ -2,14 +2,12 @@
     <div id="app">
         <Header @performSearch="getLibrary" />
 
-        <main>
-            <Content
-                :filmsList="films"
-                :seriesList="series"
-                :popularList="popularList"
-                :topRatedList="topRatedList"
-            />
-        </main>
+        <Content
+            :filmsList="films"
+            :seriesList="series"
+            :popularList="popularList"
+            :topRatedList="topRatedList"
+        />
     </div>
 </template>
 
@@ -62,19 +60,25 @@ export default {
         getLibrary(search) {
             // Search Film API
             axios
-                .get(
-                    "https://api.themoviedb.org/3/search/movie?api_key=b91b4dc2e6d19b04fe76e513e83a3219&language=it-IT&query=" +
-                        search
-                )
+                .get(this.apiURL + "search/movie", {
+                    params: {
+                        api_key: "b91b4dc2e6d19b04fe76e513e83a3219",
+                        language: "it-IT",
+                        query: search,
+                    },
+                })
                 .then((res) => {
                     this.films = res.data.results;
                 });
             // Search Series API
             axios
-                .get(
-                    "https://api.themoviedb.org/3/search/tv?api_key=e99307154c6dfb0b4750f6603256716d&language=it-IT&query=" +
-                        search
-                )
+                .get(this.apiURL + "search/tv", {
+                    params: {
+                        api_key: "b91b4dc2e6d19b04fe76e513e83a3219",
+                        language: "it-IT",
+                        query: search,
+                    },
+                })
                 .then((res) => {
                     this.series = res.data.results;
                 });

@@ -1,5 +1,6 @@
 <template>
-    <div class="images">
+    <div class="card">
+        <!-- Poster -->
         <div v-if="info.backdrop_path === null">
             <img class="backdrop" src="@/assets/images/no-poster.png" alt="" />
         </div>
@@ -11,35 +12,49 @@
             />
         </div>
         <div class="onhover">
-            <div v-if="info.title === undefined">Titolo: {{ info.name }}</div>
-            <div v-else>Titolo: {{ info.title }}</div>
-            <div v-if="info.original_title === undefined">
-                Titolo: {{ info.original_name }}
+            <!-- Titolo -->
+            <div>
+                Titolo:
+                <span v-if="info.title === undefined">{{ info.name }}</span>
+                <span v-else>{{ info.title }}</span>
             </div>
-            <div v-else>Titolo: {{ info.original_title }}</div>
-            <div v-if="info.original_language === 'it'">
+            <!-- Titolo Originale -->
+            <div>
+                Titolo Originale:
+                <span v-if="info.original_title === undefined">{{
+                    info.original_name
+                }}</span>
+                <span v-else>{{ info.original_title }}</span>
+            </div>
+            <!-- Lingua -->
+            <div>
                 Lingua:
-                <img class="language" src="@/assets/images/it.png" alt="it" />
+                <img
+                    v-if="isFlag(info.original_language)"
+                    class="language"
+                    :src="
+                        require(`@/assets/images/${info.original_language}.png`)
+                    "
+                    :alt="info.original_language"
+                />
+                <span v-else>{{ info.original_language }}</span>
             </div>
-            <div v-else-if="info.original_language === 'en'">
-                Lingua:
-                <img class="language" src="@/assets/images/en.png" alt="en" />
-            </div>
-            <div v-else>Lingua: {{ info.original_language }}</div>
+            <!-- Voto -->
             <div>
                 Voto:
-                <span
-                    v-for="(fullStar, x) in Math.round(info.vote_average / 2)"
-                    :key="x + 1000"
-                    ><i class="fas fa-star"></i
-                ></span>
-                <span
+                <i
+                    class="fas fa-star"
+                    v-for="(fullStar, i) in Math.round(info.vote_average / 2)"
+                    :key="`fullStars${i}`"
+                ></i>
+                <i
+                    class="far fa-star"
                     v-for="(emptyStar, i) in 5 -
                         Math.round(info.vote_average / 2)"
-                    :key="i"
-                    ><i class="far fa-star"></i
-                ></span>
+                    :key="`emptyStars${i}`"
+                ></i>
             </div>
+            <!-- Info -->
             <div>Info: {{ info.overview }}</div>
         </div>
     </div>
@@ -51,11 +66,21 @@ export default {
     props: {
         info: Object,
     },
+    data() {
+        return {
+            flagsImg: ["it", "en"],
+        };
+    },
+    methods: {
+        isFlag(lang) {
+            return this.flagsImg.includes(lang);
+        },
+    },
 };
 </script>
 
 <style lang="scss">
-.images {
+.card {
     padding: 0 10px;
     position: relative;
     height: 505px;

@@ -1,10 +1,12 @@
 <template>
     <main>
+        <!-- Search List -->
         <div
             class="searchList"
             v-if="filmsList.length !== 0 || seriesList.length !== 0"
         >
-            <h1>Series</h1>
+            <!-- Movies -->
+            <h1 v-show="filmsList.length !== 0">Movies</h1>
             <div class="cards">
                 <Library
                     v-for="film in filmsList"
@@ -12,7 +14,9 @@
                     :info="film"
                 />
             </div>
-            <h1>Movies</h1>
+
+            <!-- Series -->
+            <h1 v-show="seriesList.length !== 0">Series</h1>
             <div class="cards">
                 <Library
                     v-for="series in seriesList"
@@ -21,7 +25,10 @@
                 />
             </div>
         </div>
+
+        <!-- Homepage -->
         <div class="homepage" v-else>
+            <!-- Popular -->
             <h1>Popular</h1>
             <div class="cards">
                 <Library
@@ -30,6 +37,8 @@
                     :info="popular"
                 />
             </div>
+
+            <!-- Top Rated -->
             <h1>Top Rated</h1>
             <div class="cards">
                 <Library
@@ -65,11 +74,13 @@ main {
 
     h1 {
         color: #fff;
-        padding: 10px;
+        padding: 30px 10px;
     }
     .cards {
         display: flex;
         overflow-x: auto;
+        scrollbar-width: thin;
+        scrollbar-color: #ff0000 #141414;
     }
 }
 </style>
