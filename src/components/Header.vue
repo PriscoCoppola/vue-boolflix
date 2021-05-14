@@ -1,13 +1,19 @@
 <template>
     <header>
-        <img src="@/assets/images/logo.png" alt="Logo">
+        <img src="@/assets/images/logo.png" alt="Logo" />
         <div class="search">
             <input
                 type="text"
                 placeholder="Film, Serie TV"
                 v-model.trim="search"
+                @keyup.enter="$emit('performSearch', search)"
             />
-            <button @click="$emit('performSearch', search)"><i class="fas fa-search"></i></button>
+            <button>
+                <i
+                    class="fas fa-search"
+                    @click="$emit('performSearch', search)"
+                ></i>
+            </button>
         </div>
     </header>
 </template>
@@ -17,9 +23,9 @@ export default {
     name: "Header",
     data() {
         return {
-            search: '',
-        }
-    }
+            search: "",
+        };
+    },
 };
 </script>
 
@@ -41,7 +47,6 @@ header {
     }
 
     .search {
-
         input {
             padding: 10px;
             width: 250px;

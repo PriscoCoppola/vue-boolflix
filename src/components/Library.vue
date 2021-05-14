@@ -1,8 +1,12 @@
 <template>
-    <div class="card">
+    <div class="card" @click="$emit('infoBig', info)">
         <!-- Poster -->
-        <div v-if="info.backdrop_path === null">
-            <img class="backdrop" src="@/assets/images/no-poster.png" alt="" />
+        <div v-if="info.poster_path === null">
+            <img
+                class="backdrop"
+                src="https://slack-imgs.com/?c=1&o1=ro&url=https%3A%2F%2Fwww.altavod.com%2Fassets%2Fimages%2Fposter-placeholder.png"
+                alt=""
+            />
         </div>
         <div v-else>
             <img
@@ -14,13 +18,13 @@
         <div class="onhover">
             <!-- Titolo -->
             <div>
-                Titolo:
+                TITOLO:
                 <span v-if="info.title === undefined">{{ info.name }}</span>
                 <span v-else>{{ info.title }}</span>
             </div>
             <!-- Titolo Originale -->
             <div>
-                Titolo Originale:
+                TITOLO ORIGINALE:
                 <span v-if="info.original_title === undefined">{{
                     info.original_name
                 }}</span>
@@ -28,7 +32,7 @@
             </div>
             <!-- Lingua -->
             <div>
-                Lingua:
+                LINGUA:
                 <img
                     v-if="isFlag(info.original_language)"
                     class="language"
@@ -41,7 +45,7 @@
             </div>
             <!-- Voto -->
             <div>
-                Voto:
+                VOTO:
                 <i
                     class="fas fa-star"
                     v-for="(fullStar, i) in Math.round(info.vote_average / 2)"
@@ -54,8 +58,6 @@
                     :key="`emptyStars${i}`"
                 ></i>
             </div>
-            <!-- Info -->
-            <div>Info: {{ info.overview }}</div>
         </div>
     </div>
 </template>
@@ -68,7 +70,7 @@ export default {
     },
     data() {
         return {
-            flagsImg: ["it", "en"],
+            flagsImg: ["it", "en", "es", "fr"],
         };
     },
     methods: {
